@@ -45,6 +45,7 @@ public class ViewFactory {
         initializeStage(controller);
         mainViewInitialized = true;
     }
+
     public void showOptionsWindow(){
         System.out.println("options window called");
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");

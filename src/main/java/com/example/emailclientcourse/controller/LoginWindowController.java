@@ -1,76 +1,81 @@
 package com.example.emailclientcourse.controller;
 
 import com.example.emailclientcourse.EmailManager;
-import com.example.emailclientcourse.view.ColorTheme;
-import com.example.emailclientcourse.view.FontSize;
+import com.example.emailclientcourse.controller.services.LoginService;
+import com.example.emailclientcourse.model.EmailAccount;
 import com.example.emailclientcourse.view.ViewFactory;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OptionsWindowController extends BaseController implements Initializable {
-    public OptionsWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
+public class LoginWindowController extends BaseController implements Initializable {
+
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private TextField emailAddressField;
+    @FXML
+    private PasswordField passwordField;
+
+    public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
     }
-    @FXML
-    private Slider fontSizePicker;
 
     @FXML
-    private ChoiceBox<ColorTheme> themePicker;
-
-    @FXML
-    void applyButtonAction() {
-        viewFactory.setColorTheme(themePicker.getValue());
-        viewFactory.setFontSize(FontSize.values()[(int)(fontSizePicker.getValue())]);
-        viewFactory.updateStyles();
+    void loginButtonAction() {
+        System.out.println("loginButtonAction!");
+        if (fieldsAreValid()){
+            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
+            LoginService loginService = new LoginService(emailAccount, emailManager);
+            loginService.start();
+            loginService.setOnSucceeded(event -> {
+                EmailLoginResult emailLoginResult = loginService.getValue();
+                switch (emailLoginResult){
+                    case Success:
+                        System.out.println("logged in successfully!" + emailAccount);
+                        if (!viewFactory.isMainViewInitialized()){
+                            viewFactory.showMainWindow();
+                        }
+                        Stage stage = (Stage) errorLabel.getScene().getWindow();
+                        viewFactory.closeStage(stage);
+                        return;
+                    case Failed_by_credentials:
+                        errorLabel.setText("Invalid credentials.");
+                        return;
+                    case Failed_by_unexpected_error:
+                        errorLabel.setText("Unexpected error");
+                        return;
+                    default:
+                        return;
+                }
+            });
+        }
     }
-    @FXML
-    void cancelButtonAction() {
-        Stage stage = (Stage) fontSizePicker.getScene().getWindow();
-        viewFactory.closeStage(stage);
 
+    private boolean fieldsAreValid() {
+        if (emailAddressField.getText().isEmpty()){
+            errorLabel.setText("Please indicate your email address.");
+            return false;
+        }
+        if (passwordField.getText().isEmpty()){
+            errorLabel.setText("Please enter your password.");
+            return false;
+        }
+        return true;
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setUpThemePicker();
-        setUpSizePicker();
-    }
-    private void setUpSizePicker() {
-        fontSizePicker.setMin(0);
-        fontSizePicker.setMax(FontSize.values().length-1);
-        fontSizePicker.setValue(viewFactory.getFontSize().ordinal());
-        fontSizePicker.setMajorTickUnit(1);
-        fontSizePicker.setMinorTickCount(0);
-        fontSizePicker.setBlockIncrement(1);
-        fontSizePicker.setSnapToTicks(true);
-        fontSizePicker.setShowTickMarks(true);
-        fontSizePicker.setShowTickLabels(true);
-        fontSizePicker.setLabelFormatter(new StringConverter<Double>() {
-            @Override
-            public String toString(Double object) {
-                int i = object.intValue();
-                return FontSize.values() [i].toString();
-            }
-            @Override
-            public Double fromString(String string) {
-                return null;
-            }
-        });
-        fontSizePicker.valueProperty().addListener((obs, oldVal, newVal) -> {
-            fontSizePicker.setValue(newVal.intValue());
-        });
-    }
-    private void setUpThemePicker() {
-        themePicker.setItems(FXCollections.observableArrayList(ColorTheme.values()));
-        themePicker.setValue(viewFactory.getColorTheme());
+        emailAddressField.setText("iskenderova.aizirek7@gmail.com");
+        passwordField.setText("mdxglvbyzqpjzfwg");
+
     }
 }
-

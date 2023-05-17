@@ -1,10 +1,16 @@
-module com.example.emileclientcourse {
+module com.example.emailclientcourse {
+    requires java.activation;
+    requires java.mail;
     requires javafx.controls;
     requires javafx.fxml;
-
-    requires org.controlsfx.controls;
+    requires javafx.web;
+    requires javafx.graphics;
     requires com.almasb.fxgl.all;
 
-    opens com.example.emileclientcourse to javafx.fxml;
-    exports com.example.emileclientcourse;
+    opens com.example.emailclientcourse to javafx.fxml, javafx.base;
+    exports com.example.emailclientcourse;
+    exports com.example.emailclientcourse.controller;
+    opens com.example.emailclientcourse.controller to javafx.fxml, javafx.base;
+    opens com.example.emailclientcourse.model to javafx.fxml, javafx.base;
+    opens com.example.emailclientcourse.view to javafx.fxml, javafx.base;
 }

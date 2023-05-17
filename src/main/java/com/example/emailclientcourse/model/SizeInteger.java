@@ -1,7 +1,5 @@
 package com.example.emailclientcourse.model;
 
-import org.jetbrains.annotations.NotNull;
-
 public class SizeInteger implements Comparable<SizeInteger>{
     private int size;
 
