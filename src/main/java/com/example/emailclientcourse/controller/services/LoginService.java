@@ -24,8 +24,9 @@ public class LoginService extends Service<EmailLoginResult> {
             }
         };
         try {
-            Thread.sleep(30000);
+            //Thread.sleep(30000);
             Session session = Session.getInstance(emailAccount.getProperties(), authenticator);
+            emailAccount.setSession(session);
             Store store = session.getStore("imaps");
             store.connect(emailAccount.getProperties().getProperty("incomingHost"),
                     emailAccount.getAddress(),

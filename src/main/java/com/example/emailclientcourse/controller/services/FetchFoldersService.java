@@ -1,6 +1,7 @@
 package com.example.emailclientcourse.controller.services;
 
 import com.example.emailclientcourse.model.EmailTreeItem;
+import com.example.emailclientcourse.view.IconResolver;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javax.mail.Folder;
@@ -15,6 +16,7 @@ public class FetchFoldersService extends Service<Void> {
     private Store store;
     private EmailTreeItem<String> foldersRoot;
     private List<Folder> folderList;
+    private IconResolver iconResolver = new IconResolver();
 
     public FetchFoldersService(Store store, EmailTreeItem<String> foldersRoot, List<Folder> folderList) {
         this.store = store;
@@ -42,6 +44,7 @@ public class FetchFoldersService extends Service<Void> {
         for(Folder folder: folders){
             folderList.add(folder);
             EmailTreeItem<String> emailTreeItem = new EmailTreeItem<String>(folder.getName());
+            emailTreeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
             foldersRoot.getChildren().add((emailTreeItem));
             foldersRoot.setExpanded(true);
             fetchMessagesOnFolder(folder, emailTreeItem);
