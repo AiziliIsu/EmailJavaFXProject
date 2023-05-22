@@ -1,4 +1,3 @@
-# Email Client Application
 
 ## Project Title
 Email Client Application
@@ -49,4 +48,4 @@ The Email Client Application is a Java-based desktop application made with JavaF
 
 ## List of Features Yet to be Implemented
 - Sending emails with attachments
-- -Searcig and filtering
+- Searcig and filtering
