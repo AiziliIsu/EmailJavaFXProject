@@ -48,4 +48,4 @@ The Email Client Application is a Java-based desktop application made with JavaF
 
 ## List of Features Yet to be Implemented
 - Sending emails with attachments
-- Searcig and filtering
+- Searching and filtering
