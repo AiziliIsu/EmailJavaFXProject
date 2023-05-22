@@ -33,6 +33,7 @@ The Email Client Application is a Java-based desktop application made with JavaF
 - Searching and filtering emails
 - Sorting emails by various criteria
 - Changing styles: theme and fontsize
+- Activate "Help" button
 
 ## List of Completed Features
 - Login functionality for a single email account
@@ -49,3 +50,4 @@ The Email Client Application is a Java-based desktop application made with JavaF
 ## List of Features Yet to be Implemented
 - Sending emails with attachments
 - Searching and filtering
+- Activate "Help" button
