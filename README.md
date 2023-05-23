@@ -16,7 +16,7 @@ The Email Client Application is a Java-based desktop application made with JavaF
 - Google API Services Gmail v1-rev20220404-2.0.0: provides convenient methods for performing common operations such as sending emails, retrieving message threads, and managing labels.
 
 ## Installation Instructions
-1. Clone the repository: `git clone https://github.com/your-username/email-client-app.git`
+1. Clone the repository: (https://github.com/AiziliIsu/EmailJavaFXProject.git)
 2. Open the project in your preferred Java IDE.
 3. Configure the JavaFX SDK and dependencies.
 4. Build the project.
@@ -51,3 +51,5 @@ The Email Client Application is a Java-based desktop application made with JavaF
 - Sending emails with attachments
 - Searching and filtering
 - Activate "Help" button
+
+-Link to my YouTube demonstration video: https://youtu.be/-jv9_5w6wpw 
